@@ -17,17 +17,13 @@ CREATE TABLE Season(year VARCHAR(20) NOT NULL PRIMARY KEY);
 CREATE TABLE PlayerInGame(player_id INT NOT NULL REFERENCES Player(id),
 		game_id INT NOT NULL REFERENCES Game(id),
 		team_id INT NOT NULL REFERENCES Team(id),
+		is_home BOOLEAN NOT NULL,
 		points INT NOT NULL,
 		assists INT NOT NULL,
 		rebounds INT NOT NULL,
 		blocks INT NOT NULL,
 		steals INT NOT NULL,
 		PRIMARY KEY(player_id, game_id));
-
-CREATE TABLE TeamInGame(team_id  INT NOT NULL REFERENCES Team(id),
-		game_id INT NOT NULL REFERENCES Game(id),
-		is_home BOOLEAN NOT NULL,
-		PRIMARY KEY(team_id, game_id));
 
 CREATE TABLE TeamInSeason(team_id  INT NOT NULL REFERENCES Team(id),
 		season_year VARCHAR(20) NOT NULL REFERENCES Season(year),
