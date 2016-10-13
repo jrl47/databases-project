@@ -15,7 +15,7 @@ Team:
 (2, ‘Spurs’)
 
 Season:
-(2015)
+(2015, "Heat")
 
 PlayerInGame:
 (1, 1, 1, 50, 0, 0, 1, 1)
@@ -38,5 +38,5 @@ TeamInGame:
 (2, 2, True)
 
 TeamInSeason:
-(1, 2015, True, 1, 1)
-(2, 2015, False, 1, 1)
+(1, 2015, 1, 1)
+(2, 2015, 1, 1)
