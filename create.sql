@@ -12,7 +12,8 @@ CREATE TABLE Game(id INT NOT NULL PRIMARY KEY,
 CREATE TABLE Team(id INT NOT NULL PRIMARY KEY,
 		name VARCHAR(30) NOT NULL);
 
-CREATE TABLE Season(year VARCHAR(20) NOT NULL PRIMARY KEY);
+CREATE TABLE Season(year VARCHAR(20) NOT NULL PRIMARY KEY,
+		   champion VARCHAR(30) NOT NULL REFERENCES Team(name));
 
 CREATE TABLE PlayerInGame(player_id INT NOT NULL REFERENCES Player(id),
 		game_id INT NOT NULL REFERENCES Game(id),
@@ -27,7 +28,6 @@ CREATE TABLE PlayerInGame(player_id INT NOT NULL REFERENCES Player(id),
 
 CREATE TABLE TeamInSeason(team_id  INT NOT NULL REFERENCES Team(id),
 		season_year VARCHAR(20) NOT NULL REFERENCES Season(year),
-		is_champion BOOLEAN NOT NULL,
 		wins INT NOT NULL,
 		losses INT NOT NULL,
 		PRIMARY KEY(team_id, season_year));
