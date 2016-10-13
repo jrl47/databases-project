@@ -31,12 +31,3 @@ CREATE TABLE TeamInSeason(team_id  INT NOT NULL REFERENCES Team(id),
 		wins INT NOT NULL,
 		losses INT NOT NULL,
 		PRIMARY KEY(team_id, season_year));
-
-CREATE TABLE PlayerInSeason(player_id INT NOT NULL REFERENCES Player(id),
-		season_year VARCHAR(20) NOT NULL REFERENCES Season(year),
-		points INT NOT NULL,
-		assists INT NOT NULL,
-		rebounds INT NOT NULL,
-		blocks INT NOT NULL,
-		steals INT NOT NULL,
-		PRIMARY KEY(player_id, season_year));
