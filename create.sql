@@ -32,8 +32,17 @@ CREATE TABLE TeamInSeason(team_id  INT NOT NULL REFERENCES Team(id),
 		losses INT NOT NULL,
 		PRIMARY KEY(team_id, season_year));
 
-CREATE ASSERTION TwoTeamsInGame
-CHECK (NOT EXISTS
-       	(SELECT * FROM PlayerInGame pg1, PlayerInGame pg2, PlayerInGame pg3
+CREATE FUNCTION TF_Two_teams_in_game() RETURNS TRIGGER AS $$
+BEGIN
+  IF EXISTS(SELECT * FROM PlayerInGame pg1, PlayerInGame pg2, PlayerInGame pg3
 	 WHERE pg1.game_id=pg2.game_id AND pg1.game_id=pg2.game_id
-	 AND pg1.team_id<>pg2.team_id AND pg1.team_id<>pg3.team_id AND pg2.team_id<>pg3.team_id));
+	AND pg1.team_id<>pg2.team_id AND pg1.team_id<>pg3.team_id AND pg2.team_id<>pg3.team_id) THEN
+	RAISE EXCEPTION 'no more than two teams can play in a single game';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER TG_Two_teams_in_game
+  AFTER INSERT OR UPDATE ON PlayerInGame
+  EXECUTE PROCEDURE TF_Two_teams_in_game();
