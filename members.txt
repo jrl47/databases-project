@@ -6,6 +6,7 @@ Lucas Donaldson:
 Matthew Elgart:
 - formulated plan for acquiring data
 - developed E/R diagram
+- created sample data
 - created test queries
 
 Eric Jiang:
