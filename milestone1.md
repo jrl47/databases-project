@@ -16,6 +16,7 @@ Team names do not change.
 
 Each season has exactly one champion.
 ##E/R Diagram
+![ERD](ERD.png)
 
 ##List of Database tables
 Player(id, first_name, last_name) key:id
