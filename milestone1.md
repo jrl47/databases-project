@@ -19,15 +19,16 @@ Each season has exactly one champion.
 ![ERD](ERD.png)
 
 ##List of Database tables
-Player(id, first_name, last_name) key:id
+*Player(id, first_name, last_name)* key:*id*
 
-Team(id, name) key:id
+*Team(id, name)* key:*id*
 
-Season(year, champion) key:year
+*Season(year, champion)* key:*year*
 
-Game(id, season_year, location, home_team, away_team, date) key:id
+*Game(id, season_year, location, home_team, away_team, date)* key:*id*
 
-PlayerInGame(player_id, game_id, team_id, is_home, points, assists, rebounds, blocks, steals) key:player_id, game_id
+*PlayerInGame(player_id, game_id, team_id, is_home, points, assists, rebounds, blocks, steals)* key:*player_id, game_id*
 
-TeamInSeason(team_id, season_year, wins, losses) key:team_id, season_year
+*TeamInSeason(team_id, season_year, wins, losses)* key:*team_id, season_year*
+
 ##Description of web interface
