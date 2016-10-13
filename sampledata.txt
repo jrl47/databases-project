@@ -1,0 +1,42 @@
+Player:
+(1, “Justise”, “Winslow”)
+(2, “Hassan”, “Whiteside”)
+(3, “Goran”, “Dragic”)
+(4, “Kawhi”, “Leonard”)
+(5, “LaMarcus”, “Aldridge”)
+(6, “Tim”, “Duncan”)
+
+Game:
+(1, 2015, ‘Miami’, ‘Heat’, ’Spurs’, ‘January 1’)
+(2, 2015, ’San Antonio’, ’Spurs’, ‘Heat’, January 2’)
+
+Team:
+(1, ‘Heat’)
+(2, ‘Spurs’)
+
+Season:
+(2015)
+
+PlayerInGame:
+(1, 1, 1, 50, 0, 0, 1, 1)
+(2, 1, 1, 0, 0, 50, 25, 0)
+(3, 1, 1, 0, 25, 0, 0, 10)
+(4, 1, 2, 20, 0, 0, 2, 10)
+(5, 1, 2, 0, 2, 40, 10, 0)
+(6, 1, 2, 5, 5, 5, 5, 5)
+(1, 2, 1, 20, 0, 0, 0, 10)
+(2, 2, 1, 0, 0, 20, 20, 0)
+(3, 2, 1, 10, 15, 0, 0, 5)
+(4, 2, 2, 40, 0, 0, 2, 10)
+(5, 2, 2, 30, 0, 20, 0, 0)
+(6, 2, 2, 20, 20, 20, 20, 20)
+
+TeamInGame:
+(1, 1, True)
+(1, 2, False)
+(2, 1, False)
+(2, 2, True)
+
+TeamInSeason:
+(1, 2015, True, 1, 1)
+(2, 2015, False, 1, 1)
