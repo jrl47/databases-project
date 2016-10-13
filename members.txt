@@ -1,0 +1,19 @@
+Lucas Donaldson:
+- developed E/R diagram
+- created sample database
+- created test queries
+
+Matthew Elgart:
+- formulated plan for acquiring data
+- developed E/R diagram
+- created test queries
+
+Eric Jiang:
+- developed E/R diagram
+- produced graphical E/R diagram
+- created test queries
+
+Jacob Lettie:
+- developed E/R diagram
+- developed sample UI
+- created test queries
