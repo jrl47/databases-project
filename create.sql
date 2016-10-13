@@ -31,3 +31,9 @@ CREATE TABLE TeamInSeason(team_id  INT NOT NULL REFERENCES Team(id),
 		wins INT NOT NULL,
 		losses INT NOT NULL,
 		PRIMARY KEY(team_id, season_year));
+
+CREATE ASSERTION TwoTeamsInGame
+CHECK (NOT EXISTS
+       	(SELECT * FROM PlayerInGame pg1, PlayerInGame pg2, PlayerInGame pg3
+	 WHERE pg1.game_id=pg2.game_id AND pg1.game_id=pg2.game_id
+	 AND pg1.team_id<>pg2.team_id AND pg1.team_id<>pg3.team_id AND pg2.team_id<>pg3.team_id));
