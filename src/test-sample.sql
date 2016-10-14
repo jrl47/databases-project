@@ -37,23 +37,41 @@ SELECT first_name, last_name, points FROM Player, (SELECT player_id, MAX(points)
 -- Which team had the duo of players with the most combined assists in a season?
 WITH SeasonDuos AS (
   -- pairs of players on the same team with their combined assists in a single season
-  SELECT p1.player_id AS player1, p2.player_id AS player2, SUM(assists) AS season_assists, team, Game.season_year AS season
+  SELECT player1, player2, SUM(assists) AS season_assists, team, season
   FROM (
       -- pairs of players on the same team with their combined assists in a single game
-      SELECT p1.player_id, p2.player_id, p1.assists + p2.assists AS assists, p1.team_id AS team, Game.season_year
+      SELECT p1.player_id AS player1, p2.player_id AS player2, p1.assists + p2.assists AS assists, p1.team_id AS team, Game.season_year as season
       FROM PlayerInGame AS p1, PlayerInGame AS p2, Game
       WHERE p1.team_id = p2.team_id
       AND p1.game_id = p2.game_id
       AND p1.game_id = Game.id
-      AND p1.player_id < p1.player_id
-  )
-  GROUP BY p1.player_id, p2.player_id, team, Game.season_year
+      AND p1.player_id < p2.player_id
+  ) AS GameDuos
+  GROUP BY player1, player2, team, season
 )
-SELECT team, player1, player2, season_assists, season
+SELECT DISTINCT Team.name
 FROM SeasonDuos
 INNER JOIN (
     -- best duo from any team in any season
-    SELECT MAX(season_assists) AS season_assists
+    SELECT MAX(season_assists) AS max_assists
     FROM SeasonDuos
 ) BestDuos
-ON SeasonDuos.season_assists = BestDuos.season_assists
+ON SeasonDuos.season_assists = BestDuos.max_assists
+INNER JOIN Team
+ON SeasonDuos.team = Team.id;
+
+-- Which players played on the championship team this season?
+SELECT DISTINCT player_id
+FROM PlayerInGame AS p
+INNER JOIN Team
+ON p.team_id = Team.id
+INNER JOIN (
+    SELECT champion
+    FROM Season
+    INNER JOIN (
+        SELECT MAX(year) AS year
+        FROM Season
+    ) CurrentSeason
+    ON Season.year = CurrentSeason.year
+) c
+ON name = c.champion;
