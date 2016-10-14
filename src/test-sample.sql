@@ -17,18 +17,21 @@ SELECT * FROM PointsInSeason
 WHERE points=(SELECT MAX(points) FROM PointsInSeason);
 
 -- Who had the most double-doubles and how many
-SELECT * FROM
-(SELECT player_id,
-SUM(CASE WHEN temp.doubleCount >= 2 THEN 1 ELSE 0 END) AS doubleDoubles
-FROM
-(SELECT *,
-(CASE WHEN points >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN assists >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN rebounds >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN blocks >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN steals >= 10 THEN 1 ELSE 0 END) AS doubleCount
-FROM PlayerInGame) temp
-GROUP BY player_id) AS playerDoubleDoubles
+WITH playerDoubleDoubles AS (
+  (SELECT player_id,
+  SUM(CASE WHEN temp.doubleCount >= 2 THEN 1 ELSE 0 END) AS doubleDoubles
+  FROM
+  (SELECT *,
+  (CASE WHEN points >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN assists >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN rebounds >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN blocks >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN steals >= 10 THEN 1 ELSE 0 END) AS doubleCount
+  FROM PlayerInGame) temp
+  GROUP BY player_id)
+)
+SELECT *
+FROM playerDoubleDoubles
 WHERE doubleDoubles >= ALL(SELECT doubleDoubles FROM playerDoubleDoubles);
 
 -- Which players have more letters in their last name than highest career points scored in a game
