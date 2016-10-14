@@ -61,17 +61,22 @@ INNER JOIN Team
 ON SeasonDuos.team = Team.id;
 
 -- Which players played on the championship team this season?
-SELECT DISTINCT player_id
-FROM PlayerInGame AS p
-INNER JOIN Team
-ON p.team_id = Team.id
+SELECT first_name, last_name
+FROM Player
 INNER JOIN (
-    SELECT champion
-    FROM Season
+    SELECT DISTINCT player_id
+    FROM PlayerInGame AS p
+    INNER JOIN Team
+    ON p.team_id = Team.id
     INNER JOIN (
-        SELECT MAX(year) AS year
+        SELECT champion
         FROM Season
-    ) CurrentSeason
-    ON Season.year = CurrentSeason.year
-) c
-ON name = c.champion;
+        INNER JOIN (
+            SELECT MAX(year) AS year
+            FROM Season
+        ) CurrentSeason
+        ON Season.year = CurrentSeason.year
+    ) c
+    ON name = c.champion
+) ids
+ON Player.id = ids.player_id;
