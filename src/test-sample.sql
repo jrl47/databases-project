@@ -30,3 +30,23 @@ GROUP BY player_id) AS playerDoubleDoubles
 WHERE doubleDoubles >= ALL(SELECT doubleDoubles FROM playerDoubleDoubles);
 -- Which players have more letters in their last name than highest career points scored in a game
 SELECT first_name, last_name, points FROM Player, (SELECT player_id, MAX(points) FROM PlayerInGame GROUP BY player_id) WHERE player_id = id AND LEN(last_name) > points;
+-- Which players have scored the most points in San Antonion in their career and how many
+SELECT * FROM
+(SELECT player_id,
+SUM(temp.points) AS san_antonion_points
+FROM
+(SELECT *
+FROM PlayerInGame, Game
+WHERE PlayerInGame.game_id = Game.id AND game.location = 'San Antonion') temp
+GROUP BY player_id) AS playerSanAntonionPoints
+WHERE san_antonion_points >= ALL(SELECT san_antonion_points FROM playerSanAntonionPoints);
+-- Which players have the most rebounds in January and how many
+SELECT * FROM
+(SELECT player_id,
+SUM(temp.points) AS january_points
+FROM
+(SELECT *
+FROM PlayerInGame, Game
+WHERE PlayerInGame.game_id = Game.id AND CHARINDEX(game.date, 'January') > 0) temp
+GROUP BY player_id) AS playerJanuaryPoints
+WHERE january_points >= ALL(SELECT january_points FROM playerJanuaryPoints);
