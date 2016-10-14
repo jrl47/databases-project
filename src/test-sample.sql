@@ -7,13 +7,15 @@ AND ((PlayerInGame.points>9 AND PlayerInGame.assists>9 AND PlayerInGame.rebounds
 	OR (PlayerInGame.points>9 AND PlayerInGame.assists>9 AND PlayerInGame.steals>9 AND PlayerInGame.blocks>9)
 	OR (PlayerInGame.points>9 AND PlayerInGame.steals>9 AND PlayerInGame.rebounds>9 AND PlayerInGame.blocks>9)
 	OR (PlayerInGame.steals>9 AND PlayerInGame.assists>9 AND PlayerInGame.rebounds>9 AND PlayerInGame.blocks>9));
+
 -- Who won 2015 scoring title
 WITH PointsInSeason(first,last,points) AS 
 (SELECT Player.first_name, Player.last_name, 
 	(SELECT SUM(points) FROM PlayerInGame, Game WHERE player_id=Player.id AND game_id=Game.id AND Game.season_year='2015')
 FROM Player)
 SELECT * FROM PointsInSeason
-WHERE points=(SELECT MAX(points) FROM PointsInSeason); 
+WHERE points=(SELECT MAX(points) FROM PointsInSeason);
+
 -- Who had the most double-doubles and how many
 SELECT * FROM
 (SELECT player_id,
@@ -28,5 +30,30 @@ FROM
 FROM PlayerInGame) temp
 GROUP BY player_id) AS playerDoubleDoubles
 WHERE doubleDoubles >= ALL(SELECT doubleDoubles FROM playerDoubleDoubles);
+
 -- Which players have more letters in their last name than highest career points scored in a game
 SELECT first_name, last_name, points FROM Player, (SELECT player_id, MAX(points) FROM PlayerInGame GROUP BY player_id) WHERE player_id = id AND LEN(last_name) > points;
+
+-- Which team had the duo of players with the most combined assists in a season?
+WITH SeasonDuos AS (
+  -- pairs of players on the same team with their combined assists in a single season
+  SELECT p1.player_id AS player1, p2.player_id AS player2, SUM(assists) AS season_assists, team, Game.season_year AS season
+  FROM (
+      -- pairs of players on the same team with their combined assists in a single game
+      SELECT p1.player_id, p2.player_id, p1.assists + p2.assists AS assists, p1.team_id AS team, Game.season_year
+      FROM PlayerInGame AS p1, PlayerInGame AS p2, Game
+      WHERE p1.team_id = p2.team_id
+      AND p1.game_id = p2.game_id
+      AND p1.game_id = Game.id
+      AND p1.player_id < p1.player_id
+  )
+  GROUP BY p1.player_id, p2.player_id, team, Game.season_year
+)
+SELECT team, player1, player2, season_assists, season
+FROM SeasonDuos
+INNER JOIN (
+    -- best duo from any team in any season
+    SELECT MAX(season_assists) AS season_assists
+    FROM SeasonDuos
+) BestDuos
+ON SeasonDuos.season_assists = BestDuos.season_assists
