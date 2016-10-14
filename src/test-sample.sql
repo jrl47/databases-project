@@ -50,7 +50,7 @@ SUM(temp.points) AS january_points
 FROM
 (SELECT *
 FROM PlayerInGame, Game
-WHERE PlayerInGame.game_id = Game.id AND CHARINDEX(game.date, 'January') > 0) temp
+WHERE PlayerInGame.game_id = Game.id AND strpos(game.date, 'January') > 0) temp
 GROUP BY player_id) AS playerJanuaryPoints
 WHERE january_points >= ALL(SELECT january_points FROM playerJanuaryPoints);
 -- Which team had the duo of players with the most combined assists in a season?
