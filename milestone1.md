@@ -32,3 +32,4 @@ Each season has exactly one champion.
 *TeamInSeason(team_id, season_year, wins, losses)* key:*team_id, season_year*
 
 ##Description of web interface
+The web interface will allow users to graphically build a broad class of queries regarding players, teams, games, and seasons. The user will be given a drop down menu to choose whether they would like information primarily associated with players, teams, games, or seasons, and will then offer a selection of queries for the user to ask. If the player wishes to make a query about a specific player, team, game, or season, they may either select the object of interest from a table it is being displayed in to specify it as the subject of the next query (by way of auto-filling an id box), or look up the object of interest in a "find a specific entity" search bar.
