@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block heading %}All Players{% endblock %}
+{% block content %}
+<ul>
+  {% for player in players %}
+  <li><a href="{{url_for('player', id=player.id)}}">{{player.id}}</a></li>
+  {% endfor %}
+</ul>
+<hr/>
+<p>{{players|length}} player{{players|length|pluralize}}
+  found in the database.</p>
+{% endblock %}

@@ -1,0 +1,13 @@
+html {
+    background: #e6e9e9;
+}
+
+body {
+    color: black;
+    background-color: #e8f8ff;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    max-width: 800px;
+    padding: 1em 2em 4em;
+    margin: 0 auto;
+    line-height: 1.2;
+}
