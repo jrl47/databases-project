@@ -17,32 +17,42 @@ SELECT * FROM PointsInSeason
 WHERE points=(SELECT MAX(points) FROM PointsInSeason);
 
 -- Who had the most double-doubles and how many
-SELECT * FROM
-(SELECT player_id,
-SUM(CASE WHEN temp.doubleCount >= 2 THEN 1 ELSE 0 END) AS doubleDoubles
-FROM
-(SELECT *,
-(CASE WHEN points >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN assists >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN rebounds >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN blocks >= 10 THEN 1 ELSE 0 END) +
-(CASE WHEN steals >= 10 THEN 1 ELSE 0 END) AS doubleCount
-FROM PlayerInGame) temp
-GROUP BY player_id) AS playerDoubleDoubles
+WITH playerDoubleDoubles AS (
+  (SELECT player_id,
+  SUM(CASE WHEN temp.doubleCount >= 2 THEN 1 ELSE 0 END) AS doubleDoubles
+  FROM
+  (SELECT *,
+  (CASE WHEN points >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN assists >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN rebounds >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN blocks >= 10 THEN 1 ELSE 0 END) +
+  (CASE WHEN steals >= 10 THEN 1 ELSE 0 END) AS doubleCount
+  FROM PlayerInGame) temp
+  GROUP BY player_id)
+)
+SELECT *
+FROM playerDoubleDoubles
 WHERE doubleDoubles >= ALL(SELECT doubleDoubles FROM playerDoubleDoubles);
 
 -- Which players have more letters in their last name than highest career points scored in a game
-SELECT first_name, last_name, points FROM Player, (SELECT player_id, MAX(points) FROM PlayerInGame GROUP BY player_id) WHERE player_id = id AND LEN(last_name) > points;
+SELECT first_name, last_name, points
+FROM Player, (SELECT player_id, MAX(points) AS points FROM PlayerInGame GROUP BY player_id) as r
+WHERE player_id = id AND LENGTH(last_name) > points;
+
 -- Which players have scored the most points in San Antonion in their career and how many
-SELECT * FROM
-(SELECT player_id,
-SUM(temp.points) AS san_antonion_points
-FROM
-(SELECT *
-FROM PlayerInGame, Game
-WHERE PlayerInGame.game_id = Game.id AND game.location = 'San Antonion') temp
-GROUP BY player_id) AS playerSanAntonionPoints
+WITH playerSanAntonionPoints AS (
+  SELECT player_id,
+  SUM(temp.points) AS san_antonion_points
+  FROM
+  (SELECT *
+   FROM PlayerInGame, Game
+   WHERE PlayerInGame.game_id = Game.id AND game.location = 'San Antonio') temp
+  GROUP BY player_id
+)
+SELECT *
+FROM playerSanAntonionPoints
 WHERE san_antonion_points >= ALL(SELECT san_antonion_points FROM playerSanAntonionPoints);
+
 -- Which players have the most rebounds in January and how many
 SELECT * FROM
 (SELECT player_id,
@@ -50,9 +60,10 @@ SUM(temp.points) AS january_points
 FROM
 (SELECT *
 FROM PlayerInGame, Game
-WHERE PlayerInGame.game_id = Game.id AND CHARINDEX(game.date, 'January') > 0) temp
+WHERE PlayerInGame.game_id = Game.id AND strpos(game.date, 'January') > 0) temp
 GROUP BY player_id) AS playerJanuaryPoints
 WHERE january_points >= ALL(SELECT january_points FROM playerJanuaryPoints);
+
 -- Which team had the duo of players with the most combined assists in a season?
 WITH SeasonDuos AS (
   -- pairs of players on the same team with their combined assists in a single season
