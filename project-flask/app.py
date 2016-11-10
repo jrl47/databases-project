@@ -9,9 +9,7 @@ import forms
 
 @app.route('/')
 def all_players():
-#   return str(models.Player)
     players = db.session.query(models.Player).all()
-#   return 'AUGEHJAHEA'
     return render_template('all-players.html', players=players)
 
 
@@ -21,27 +19,30 @@ def player(id):
         .filter(models.Player.id == id).one()
     return render_template('player.html', player=player)
 
-'''
-@app.route('/edit-drinker/<name>', methods=['GET', 'POST'])
-def edit_drinker(name):
-    drinker = db.session.query(models.Drinker)\
-        .filter(models.Drinker.name == name).one()
-    beers = db.session.query(models.Beer).all()
-    bars = db.session.query(models.Bar).all()
-    form = forms.DrinkerEditFormFactory.form(drinker, beers, bars)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+#   player = db.session.query(models.Drinker)\
+#       .filter(models.Drinker.name == name).one()
+#   beers = db.session.query(models.Beer).all()
+#   bars = db.session.query(models.Bar).all()
+#   form = forms.DrinkerEditFormFactory.form(drinker, beers, bars)
+    form = forms.PlayerSearchFormFactory.form()
     if form.validate_on_submit():
         try:
             form.errors.pop('database', None)
-            models.Drinker.edit(name, form.name.data, form.address.data,
-                                form.get_beers_liked(), form.get_bars_frequented())
-            return redirect(url_for('drinker', name=form.name.data))
+#           models.Drinker.edit(name, form.name.data, form.address.data,
+#                               form.get_beers_liked(), form.get_bars_frequented())
+            player = db.session.query(models.Player)\
+                .filter(models.Player.last_name == form.last_name.data).one()
+            return redirect(url_for('player', id = player.id))
         except BaseException as e:
             form.errors['database'] = str(e)
-            return render_template('edit-drinker.html', drinker=drinker, form=form)
+            return render_template('find-player.html', form=form)
     else:
-        return render_template('edit-drinker.html', drinker=drinker, form=form)
+        return render_template('find-player.html', form=form)
 
-'''
+
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
     return singular if number in (0, 1) else plural

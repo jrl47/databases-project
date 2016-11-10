@@ -4,8 +4,7 @@ from app import db
 class Drinker(db.Model):
     __tablename__ = 'drinker'
     name = db.Column('name', db.String(20), primary_key=True)
-#   address = db.Column('address', db.String(20))
-    '''
+    address = db.Column('address', db.String(20))
     likes = orm.relationship('Likes')
     frequents = orm.relationship('Frequents')
     @staticmethod
@@ -30,8 +29,8 @@ class Drinker(db.Model):
         except Exception as e:
             db.session.rollback()
             raise e
-      '''
-'''
+      
+
 class Beer(db.Model):
     __tablename__ = 'beer'
     name = db.Column('name', db.String(20), primary_key=True)
@@ -71,4 +70,4 @@ class Frequents(db.Model):
                     db.ForeignKey('bar.name'),
                     primary_key=True)
     times_a_week = db.Column('times_a_week', db.Integer())
-'''
+

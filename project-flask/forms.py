@@ -2,12 +2,19 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField
 from wtforms.validators import DataRequired
 
+class PlayerSearchFormFactory:
+    @staticmethod
+    def form():
+        class F(FlaskForm):
+            last_name = StringField(default="")
+        return F()   
+
 class PlayerEditFormFactory:
     @staticmethod
     def form(player):
 #   def form(drinker, beers, bars):
         class F(FlaskForm):
-            id = StringField(default=player.id)
+            last_name = StringField(default=player.last_name)
         '''
             name = StringField(default=drinker.name)
             address = StringField(default=drinker.address)

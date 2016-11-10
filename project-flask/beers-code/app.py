@@ -19,7 +19,7 @@ def drinker(name):
     drinker = db.session.query(models.Drinker)\
         .filter(models.Drinker.name == name).one()
     return render_template('drinker.html', drinker=drinker)
-'''
+
 @app.route('/edit-drinker/<name>', methods=['GET', 'POST'])
 def edit_drinker(name):
     drinker = db.session.query(models.Drinker)\
@@ -38,7 +38,7 @@ def edit_drinker(name):
             return render_template('edit-drinker.html', drinker=drinker, form=form)
     else:
         return render_template('edit-drinker.html', drinker=drinker, form=form)
-'''
+
 
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
