@@ -13,3 +13,12 @@ trigger functionality.
 
 test-sample.sql contains a set of sample queries to test out our
 database.
+
+generate-data.py is a Python script that we used in conjunction
+with the goldsberry module (https://github.com/bradleyfay/py-Goldsberry)
+to obtain the production dataset.
+
+Note that while we have been able to access the production dataset
+we have not at this point been able to test queries on it just yet
+for performance analysis.
+
