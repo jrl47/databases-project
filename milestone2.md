@@ -1,11 +1,3 @@
 #Milestone 2
 
-##Completed tasks
-
-##Tasks left
-* Setup MEAN stack
-* Make any changes to use cases
-* Design visual interface to work with use cases we have
-* Learn about MongoDB: how it works, best way to run it within an app, etc.
-* Based on web interface and understanding of MongoDB/how the data will be stored within the app, plan out the broad design of the app (so we can implement the "hello world" prototype thing mentioned in the project page)
-* Provide visualizations of stats
+We spent the majority of the work on this milestone setting up the infrastructure for our application- creating a basic web interface and actually acquiring the production dataset to ensure that we can convert it into a format that we can use in our SQL database. The web application is written in Python using Flask, co-opted from the example on the class website. As stated previously, the data is accessed from stats.nba.com using an existing Python module. We did not make any changes to E/R design and table schema during work on this milestone.

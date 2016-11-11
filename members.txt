@@ -2,19 +2,26 @@ Lucas Donaldson:
 - developed E/R diagram
 - created sample database
 - created test queries
+- collaborated to plan application structure
+- acquired production dataset
 
 Matthew Elgart:
 - formulated plan for acquiring data
 - developed E/R diagram
 - created sample data
 - created test queries
+- collaborated to plan application structure
+- acquired production dataset
 
 Eric Jiang:
 - developed E/R diagram
 - produced graphical E/R diagram
 - created test queries
+- collaborated to plan application structure
 
 Jacob Lettie:
 - developed E/R diagram
 - developed sample UI
 - created test queries
+- collaborated to plan application structure
+- development/debugging of web UI
