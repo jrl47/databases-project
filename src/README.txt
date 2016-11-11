@@ -22,3 +22,5 @@ Note that while we have been able to access the production dataset
 we have not at this point been able to test queries on it just yet
 for performance analysis.
 
+Code for running the application interface is in the project-flask
+folder (db-basketball database).
