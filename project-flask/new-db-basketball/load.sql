@@ -1,0 +1,3 @@
+\COPY Team(id,conf_titles,div_titles,start_year,end_year,games,league_titles,wins,losses,po_appearances,team_city,team_id,team_name,win_pct,years) FROM 'Data/Team.dat' WITH DELIMITER ',' NULL '' CSV
+\COPY Player(id,first_last,from_year,to_year,player_id,team_city,team_id,team_name) FROM 'Data/Player.dat' WITH DELIMITER ',' NULL '' CSV
+\COPY Game(id,pts,ast,blk,stl,reb,oreb,dreb,tov,fg3a,fg3m,fg3_pct,fga,fgm,fg_pct,fta,ftm,ft_pct,min,pf,plus_minus,game_date,game_id,matchup,player_id,wl) FROM 'Data/Game.dat' WITH DELIMITER ',' NULL '' CSV
