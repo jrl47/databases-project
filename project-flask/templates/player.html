@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% block heading %}Player Information: {{player.player_id}}{% endblock %}
 {% block content %}
-<p>Name: {{player.first_last}} {{player.team_city}}</p>
+<p>Name: {{player.first_last}}</p>
+<p>Team: {{team.team_name}}</p>
 {% endblock %}
