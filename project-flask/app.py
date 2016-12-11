@@ -13,10 +13,10 @@ def all_players():
     return render_template('all-players.html', players=players)
 
 
-@app.route('/player/<id>')
-def player(id):
+@app.route('/player/<player_id>')
+def player(player_id):
     player = db.session.query(models.Player)\
-        .filter(models.Player.id == id).one()
+        .filter(models.Player.player_id == player_id).one()
     return render_template('player.html', player=player)
 
 
@@ -34,8 +34,8 @@ def search():
 #           models.Drinker.edit(name, form.name.data, form.address.data,
 #                               form.get_beers_liked(), form.get_bars_frequented())
             player = db.session.query(models.Player)\
-                .filter(models.Player.last_name == form.last_name.data).one()
-            return redirect(url_for('player', id = player.id))
+                .filter(models.Player.from_year == 2010).all()
+            return render_template('all-players.html', players=player)
         except BaseException as e:
             form.errors['database'] = str(e)
             return render_template('find-player.html', form=form)
@@ -48,4 +48,4 @@ def pluralize(number, singular='', plural='s'):
     return singular if number in (0, 1) else plural
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5004)

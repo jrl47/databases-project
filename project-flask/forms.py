@@ -6,7 +6,7 @@ class PlayerSearchFormFactory:
     @staticmethod
     def form():
         class F(FlaskForm):
-            last_name = StringField(default="")
+            first_last = StringField(default="")
         return F()   
 
 class PlayerEditFormFactory:
@@ -14,7 +14,7 @@ class PlayerEditFormFactory:
     def form(player):
 #   def form(drinker, beers, bars):
         class F(FlaskForm):
-            last_name = StringField(default=player.last_name)
+            first_last = StringField(default=player.first_last)
         '''
             name = StringField(default=drinker.name)
             address = StringField(default=drinker.address)
