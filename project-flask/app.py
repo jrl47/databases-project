@@ -8,9 +8,8 @@ import models
 import forms
 
 @app.route('/')
-def all_players():
-    players = db.session.query(models.Player).all()
-    return render_template('all-players.html', players=players)
+def home():
+    return render_template('home.html')
 
 
 @app.route('/player/<player_id>')
