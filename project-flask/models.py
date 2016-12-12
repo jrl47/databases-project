@@ -62,7 +62,7 @@ class Game(db.Model):
     game_id = db.Column('game_id', db.String(20), primary_key=True)
     matchup = db.Column('matchup', db.String(20))
     player_id = db.Column('player_id', db.String(20), db.ForeignKey('player.player_id'), primary_key=True)
-    w1 = db.Column('w1', db.String(1))
+    wl = db.Column('wl', db.String(1))
 '''
     address = db.Column('address', db.String(20))
     likes = orm.relationship('Likes')
