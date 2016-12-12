@@ -3,18 +3,13 @@
 {% block content %}
 
 
-
-
-<form action="{{url_for('query')}}" method="POST">
+<form action="{{url_for('home')}}" method="POST">
   {{form.csrf_token}}
   <p>
-    Points: {{form.pts}}
-    Assists: {{form.ast}}
-    Rebounds: {{form.reb}}
-    Blocks: {{form.blk}}
-    Steals: {{form.stl}}
-    {% if form.pts.errors %}
-    <ul>{% for error in form.pts.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    Find {{form.query_type}}
+    with {{form.attribute}} {{form.predicate}} {{form.value}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
     {% endif %}
   </p>
   <hr/>

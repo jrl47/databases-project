@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block heading %}Query Results:{% endblock %}
+{% block content %}
+<ul>
+  {% for result in results %}
+  {% if result[1].player_id is defined %}
+  <li><a href="{{url_for('player', player_id=result[1].player_id)}}">{{result[1].first_last}}</a></li>
+  {% endif %}
+  </hr>
+  {% endfor %}
+</ul>
+<hr/>
+<p>{{results|length}} result{{results|length|pluralize}}
+  found in the database.</p>
+<p>Go back <a href="{{url_for('home')}}">home</a> to enter a new query!</p>
+{% endblock %}
