@@ -7,9 +7,20 @@ db = SQLAlchemy(app, session_options={'autocommit': False})
 import models
 import forms
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    form = forms.PlayerSearchFormFactory.form()
+    if form.validate_on_submit():
+        try:
+            form.errors.pop('database', None)
+            player = db.session.query(models.Player)\
+                .filter(models.Player.from_year == 2010).all()
+            return render_template('all-players.html', players=player)
+        except BaseException as e:
+            form.errors['database'] = str(e)
+            return render_template('home.html', form=form)
+    else:
+        return render_template('home.html', form=form)
 
 
 @app.route('/player/<player_id>')
@@ -18,28 +29,6 @@ def player(player_id):
         .filter(models.Player.player_id == player_id).one()
     return render_template('player.html', player=player)
 
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-#   player = db.session.query(models.Drinker)\
-#       .filter(models.Drinker.name == name).one()
-#   beers = db.session.query(models.Beer).all()
-#   bars = db.session.query(models.Bar).all()
-#   form = forms.DrinkerEditFormFactory.form(drinker, beers, bars)
-    form = forms.PlayerSearchFormFactory.form()
-    if form.validate_on_submit():
-        try:
-            form.errors.pop('database', None)
-#           models.Drinker.edit(name, form.name.data, form.address.data,
-#                               form.get_beers_liked(), form.get_bars_frequented())
-            player = db.session.query(models.Player)\
-                .filter(models.Player.from_year == 2010).all()
-            return render_template('all-players.html', players=player)
-        except BaseException as e:
-            form.errors['database'] = str(e)
-            return render_template('find-player.html', form=form)
-    else:
-        return render_template('find-player.html', form=form)
 
 @app.route('/query', methods=['GET', 'POST'])
 #def query():
@@ -65,9 +54,9 @@ def query(stats=None):
             return render_template('all-players.html', players=player)
         except BaseException as e:
             form.errors['database'] = str(e)
-            return render_template('find-player.html', form=form)
+            return render_template('home.html', form=form)
     else:
-        return render_template('find-player.html', form=form)
+        return render_template('home.html', form=form)
 
 
 @app.template_filter('pluralize')
