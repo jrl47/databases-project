@@ -42,6 +42,34 @@ def search():
     else:
         return render_template('find-player.html', form=form)
 
+@app.route('/query', methods=['GET', 'POST'])
+#def search():
+''' 
+stats is an array of length 5, with entries for points, assists, rebounds, blocks, and steals (in that order)
+'''
+def search(stats=None):
+#   player = db.session.query(models.Drinker)\
+#       .filter(models.Drinker.name == name).one()
+#   beers = db.session.query(models.Beer).all()
+#   bars = db.session.query(models.Bar).all()
+#   form = forms.DrinkerEditFormFactory.form(drinker, beers, bars)
+    form = forms.PlayerSearchFormFactory.form()
+    if form.validate_on_submit():
+        try:
+            form.errors.pop('database', None)
+#           models.Drinker.edit(name, form.name.data, form.address.data,
+#                               form.get_beers_liked(), form.get_bars_frequented())
+#            player = db.session.query(models.Game)\
+#                .filter(models.Game.pts >= stats[0] and models.Game.ast >= stats[1] and models.Game.reb >= stats[2] and models.Game.blk >= stats[3] and models.Game.stl >= stats[4]).all()
+            player = db.session.query(models.Game)\
+                .filter(models.Game.pts >= 5 and models.Game.ast >= 5 and models.Game.reb >= 5 and models.Game.blk >= 5 and models.Game.stl >= 5).all()
+            return render_template('all-players.html', players=player)
+        except BaseException as e:
+            form.errors['database'] = str(e)
+            return render_template('find-player.html', form=form)
+    else:
+        return render_template('find-player.html', form=form)
+
 
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
