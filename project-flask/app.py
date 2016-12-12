@@ -15,7 +15,7 @@ def home():
             form.errors.pop('database', None)
             player = db.session.query(models.Game,models.Player)\
                 .join(models.Player)\
-                .filter(models.Game.pts >= form.value.data).filter(models.Game.player_id == models.Player.player_id).all()
+                .filter(getattr(models.Game, form.attribute.data) >= form.value.data).filter(models.Game.player_id == models.Player.player_id).all()
             return render_template('result-list.html', results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
@@ -38,7 +38,7 @@ def query():
     form = forms.StatSearchFormFactory.form()
     if form.validate_on_submit():
         try:
-            form.errors.pop('database', None)            
+            form.errors.pop('database', None)
             game = db.session.query(models.Game,models.Player)\
                 .join(models.Player)\
                 .filter(models.Game.pts >= form.pts.data).filter(models.Game.player_id == models.Player.player_id).all()
@@ -48,7 +48,7 @@ def query():
             return render_template('home.html', form=form)
     else:
         return render_template('home.html', form=form)
-            
+
 
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
