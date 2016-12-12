@@ -15,7 +15,7 @@ def home():
             form.errors.pop('database', None)
             player = db.session.query(models.Player)\
                 .filter(models.Player.from_year == 2010).all()
-            return render_template('all-players.html', players=player)
+            return render_template('result-list.html', results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
             return render_template('home.html', form=form)
@@ -51,7 +51,7 @@ def query(stats=None):
 #                .filter(models.Game.pts >= stats[0] and models.Game.ast >= stats[1] and models.Game.reb >= stats[2] and models.Game.blk >= stats[3] and models.Game.stl >= stats[4]).all()
             player = db.session.query(models.Game)\
                 .filter(models.Game.pts >= 5 and models.Game.ast >= 5 and models.Game.reb >= 5 and models.Game.blk >= 5 and models.Game.stl >= 5).all()
-            return render_template('all-players.html', players=player)
+            return render_template('result-list.html', results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
             return render_template('home.html', form=form)
