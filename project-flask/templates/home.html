@@ -6,7 +6,8 @@
 <form action="{{url_for('home')}}" method="POST">
   {{form.csrf_token}}
   <p>
-    Name: {{form.first_last}}
+    Find {{form.query_type}}
+    with {{form.attribute}} {{form.predicate}} {{form.value}}
     {% if form.first_last.errors %}
     <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
     {% endif %}
