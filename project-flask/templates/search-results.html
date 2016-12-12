@@ -3,7 +3,7 @@
 {% block content %}
 <ul>
   {% for player in players %}
-  <li><a href="{{url_for('player', player_id=player.player_id)}}">{{player.first_last}}</a></li>
+  <li><a href="{{url_for('player', player_id=player.player_id)}}">{{player[1].first_last}}</a></li>
   {% endfor %}
 </ul>
 <hr/>

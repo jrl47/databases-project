@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block heading %}Search for a player!{% endblock %}
+{% block content %}
+
+
+
+
+<form action="{{url_for('query')}}" method="POST">
+  {{form.csrf_token}}
+  <p>
+    Points: {{form.pts}}
+    Assists: {{form.ast}}
+    Rebounds: {{form.reb}}
+    Blocks: {{form.blk}}
+    Steals: {{form.stl}}
+    {% if form.pts.errors %}
+    <ul>{% for error in form.pts.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
+  <hr/>
+  <input type="reset" value="Reset"/>
+  <input type="submit" value="Submit"/>
+  {% if 'database' in form.errors %}<p>{{form.errors['database']}}</p>{% endif %}
+</form>
+{% endblock %}

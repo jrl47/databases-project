@@ -9,6 +9,17 @@ class PlayerSearchFormFactory:
             first_last = StringField(default="")
         return F()   
 
+class StatSearchFormFactory:
+    @staticmethod
+    def form():
+        class F(FlaskForm):
+            pts = IntegerField(default=0)
+            ast = IntegerField(default=0)
+            reb = IntegerField(default=0)
+            blk = IntegerField(default=0)
+            stl = IntegerField(default=0)
+        return F()   
+
 class PlayerEditFormFactory:
     @staticmethod
     def form(player):
