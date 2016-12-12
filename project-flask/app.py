@@ -43,11 +43,11 @@ def search():
         return render_template('find-player.html', form=form)
 
 @app.route('/query', methods=['GET', 'POST'])
-#def search():
-''' 
-stats is an array of length 5, with entries for points, assists, rebounds, blocks, and steals (in that order)
-'''
-def search(stats=None):
+#def query():
+ 
+#stats is an array of length 5, with entries for points, assists, rebounds, blocks, and steals (in that order)
+
+def query(stats=None):
 #   player = db.session.query(models.Drinker)\
 #       .filter(models.Drinker.name == name).one()
 #   beers = db.session.query(models.Beer).all()
