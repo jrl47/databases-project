@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, IntegerField
+from wtforms import StringField, BooleanField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
 class PlayerSearchFormFactory:
@@ -7,7 +7,11 @@ class PlayerSearchFormFactory:
     def form():
         class F(FlaskForm):
             first_last = StringField(default="")
-        return F()   
+            query_type = SelectField('Type', choices=[('players', 'Players'), ('teams', 'Teams')])
+            attribute = SelectField('Attribute', choices=[('points', 'Points'), ('assists', 'Assists'), ('rebounds', 'Rebounds'), ('blocks', 'Blocks'), ('steals', 'Steals')])
+            predicate = SelectField('Predicate', choices=[('greater', '>'), ('less', '<'), ('equal', '=')])
+            value = StringField(default="")
+        return F()
 
 class PlayerEditFormFactory:
     @staticmethod
