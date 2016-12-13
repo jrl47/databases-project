@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block heading %}Team Information: {{team.team_name}}{% endblock %}
+{% block content %}
+<p>City: {{team.team_city}}</p>
+<p>Name: {{team.team_name}}</p>
+<p>{{team.league_titles}} league titles from {{team.start_year}} to {{team.end_year}}</p>
+<p>W/L: {{team.wins}}/{{team.losses}} ({{team.win_pct}} win percentage)</p>
+{% endblock %}

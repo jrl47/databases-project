@@ -12,6 +12,30 @@
     <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
     {% endif %}
   </p>
+  <p>
+    And {{form.attribute2}} {{form.predicate2}} {{form.value2}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
+  <p>
+    And {{form.attribute3}} {{form.predicate3}} {{form.value3}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
+  <p>
+    And {{form.attribute4}} {{form.predicate4}} {{form.value4}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
+  <p>
+    And {{form.attribute5}} {{form.predicate5}} {{form.value5}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
   <hr/>
   <input type="reset" value="Reset"/>
   <input type="submit" value="Submit"/>

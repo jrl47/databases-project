@@ -49,4 +49,4 @@ CREATE TABLE Game(id INT,
 		matchup VARCHAR(20),
 		player_id VARCHAR(20) NOT NULL REFERENCES Player(player_id),
 		wl CHAR(1),
-		PRIMARY KEY(player_id,game_id));
+		PRIMARY KEY(player_id,game_id,matchup));

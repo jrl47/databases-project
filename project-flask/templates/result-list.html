@@ -4,13 +4,17 @@
 <hr/>
 {% for result in results %}
 {% if result[1].player_id is defined %}
-  <h3>{{result[1].first_last}}</h3>
+  <h3><a href="{{url_for('player', player_id=result[1].player_id)}}">{{result[1].first_last}}</a></h3>
 
   {% if result[1].team_name is none %}
   <p>No Current Team</p>
   {% else %}
-  <p>{{result[1].team_name}}</p>
+  <p>Current Team: <a href="{{url_for('team', team_id=result[1].team_id)}}">{{result[1].team_city}} {{result[1].team_name}}</a></p>
   {% endif %}
+
+<p>{{result[0].game_date}}: {{result[0].matchup}} 
+
+  <p>Points: {{result[0].pts}} | Assists: {{result[0].ast}} | Rebounds: {{result[0].reb}} | Blocks: {{result[0].blk}} | Steals: {{result[0].stl}}</p>
 
 {% else %}
   <h3>{{result[1].team_name}}</h3>

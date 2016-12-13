@@ -13,10 +13,44 @@ def home():
     if form.validate_on_submit():
         try:
             form.errors.pop('database', None)
-            player = db.session.query(models.Game,models.Player)\
-                .join(models.Player)\
-                .filter(getattr(models.Game, form.attribute.data) >= form.value.data).filter(models.Game.player_id == models.Player.player_id).all()
-            return render_template('result-list.html', results=player)
+            if form.predicate.data=='greater':
+                player = db.session.query(models.Game,models.Player)\
+                    .join(models.Player)\
+                    .filter(getattr(models.Game, form.attribute.data) >= form.value.data).filter(models.Game.player_id == models.Player.player_id)
+            elif form.predicate.data=='less':
+                player = db.session.query(models.Game,models.Player)\
+                    .join(models.Player)\
+                    .filter(getattr(models.Game, form.attribute.data) <= form.value.data).filter(models.Game.player_id == models.Player.player_id)
+            elif form.predicate.data=='equal':
+                player = db.session.query(models.Game,models.Player)\
+                    .join(models.Player)\
+                    .filter(getattr(models.Game, form.attribute.data) == form.value.data).filter(models.Game.player_id == models.Player.player_id)
+            if form.predicate2.data=='greater':
+                player = player.filter(getattr(models.Game, form.attribute2.data) >= form.value2.data)
+            elif form.predicate2.data=='less':
+                player = player.filter(getattr(models.Game, form.attribute2.data) <= form.value2.data)
+            elif form.predicate2.data=='equal':
+                player = player.filter(getattr(models.Game, form.attribute2.data) == form.value2.data)
+            if form.predicate3.data=='greater':
+                player = player.filter(getattr(models.Game, form.attribute3.data) >= form.value3.data)
+            elif form.predicate3.data=='less':
+                player = player.filter(getattr(models.Game, form.attribute3.data) <= form.value3.data)
+            elif form.predicate3.data=='equal':
+                player = player.filter(getattr(models.Game, form.attribute3.data) == form.value3.data)
+            if form.predicate4.data=='greater':
+                player = player.filter(getattr(models.Game, form.attribute4.data) >= form.value4.data)
+            elif form.predicate4.data=='less':
+                player = player.filter(getattr(models.Game, form.attribute4.data) <= form.value4.data)
+            elif form.predicate4.data=='equal':
+                player = player.filter(getattr(models.Game, form.attribute4.data) == form.value4.data)
+            if form.predicate5.data=='greater':
+                player = player.filter(getattr(models.Game, form.attribute5.data) >= form.value5.data)
+            elif form.predicate5.data=='less':
+                player = player.filter(getattr(models.Game, form.attribute5.data) <= form.value5.data)
+            elif form.predicate5.data=='equal':
+                player = player.filter(getattr(models.Game, form.attribute5.data) == form.value5.data)
+            player = player.all()
+            return render_template('result-list.html',results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
             return render_template('home.html', form=form)
@@ -31,6 +65,12 @@ def player(player_id):
     team = db.session.query(models.Team)\
         .filter(models.Team.team_id == player.team_id).one()
     return render_template('player.html', player=player,team=team)
+
+@app.route('/team/<team_id>')
+def team(team_id):
+    team = db.session.query(models.Team)\
+        .filter(models.Team.team_id == team_id).one()
+    return render_template('team.html',team=team)
 
 
 @app.route('/query', methods=['GET', 'POST'])
