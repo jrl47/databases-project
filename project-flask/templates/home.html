@@ -6,7 +6,7 @@
 <form action="{{url_for('home')}}" method="POST">
   {{form.csrf_token}}
   <p>
-    Find {{form.query_type}}
+    Find Players
     with {{form.attribute}} {{form.predicate}} {{form.value}}
     {% if form.first_last.errors %}
     <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
