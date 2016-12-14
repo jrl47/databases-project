@@ -36,6 +36,12 @@
     <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
     {% endif %}
   </p>
+  <p>
+    Order by {{form.orderby}}
+    {% if form.first_last.errors %}
+    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
   <hr/>
   <input type="reset" value="Reset"/>
   <input type="submit" value="Submit"/>

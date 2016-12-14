@@ -23,6 +23,7 @@ class PlayerSearchFormFactory:
             attribute5 = SelectField('Attribute', choices=[('pts', 'Points'), ('ast', 'Assists'), ('reb', 'Rebounds'), ('blk', 'Blocks'), ('stl', 'Steals')])
             predicate5 = SelectField('Predicate', choices=[('greater', '>='), ('less', '<='), ('equal', '=')])
             value5 = IntegerField(default=0)
+            orderby = SelectField('Attribute', choices=[('pts', 'Points'), ('ast', 'Assists'), ('reb', 'Rebounds'), ('blk', 'Blocks'), ('stl', 'Steals')])
         return F()
 
 class StatSearchFormFactory:

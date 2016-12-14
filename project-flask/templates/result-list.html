@@ -12,9 +12,9 @@
   <p>Current Team: <a href="{{url_for('team', team_id=result[1].team_id)}}">{{result[1].team_city}} {{result[1].team_name}}</a></p>
   {% endif %}
 
-<p>{{result[0].game_date}}: {{result[0].matchup}} 
+  <p>{{result[0].game_date}}: {{result[0].matchup}} 
 
-  <p>Points: {{result[0].pts}} | Assists: {{result[0].ast}} | Rebounds: {{result[0].reb}} | Blocks: {{result[0].blk}} | Steals: {{result[0].stl}}</p>
+  <p><a href="{{url_for('game', game_id=result[0].game_id, player_id=result[0].player_id, matchup=result[0].matchup)}}">Points: {{result[0].pts}} | Assists: {{result[0].ast}} | Rebounds: {{result[0].reb}} | Blocks: {{result[0].blk}} | Steals: {{result[0].stl}}</a></p>
 
 {% else %}
   <h3>{{result[1].team_name}}</h3>
