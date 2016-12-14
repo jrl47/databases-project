@@ -20,7 +20,7 @@
 </p>
 
 <form id="form" action="{{url_for('home')}}" method="POST">
-  Find {{form.query_type}}
+  Find players
   <p id="row-1">
     with
     <select id="attribute-1" name="attribute-1">
@@ -38,6 +38,16 @@
     <input id="value-1" name="value-1" type="text" value="0">
   </p>
   <button type="button" id="addNewInput">+ Add condition</button>
+  <p>
+    Ordered by
+    <select id="orderby" name="orderby">
+      <option value="pts">Points</option>
+      <option value="ast">Assists</option>
+      <option value="reb">Rebounds</option>
+      <option value="blk">Blocks</option>
+      <option value="stl">Steals</option>
+    </select>
+  </p>
   <hr id="sep"/>
   <input type="reset" value="Reset" id="reset"/>
   <input type="submit" value="Submit"/>

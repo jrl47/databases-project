@@ -12,6 +12,22 @@ body {
     line-height: 1.2;
 }
 
+h1 {
+    background-image: url("img/header.jpeg"); 
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80px;
+    color: white;
+}
+
+table{
+    border-spacing: 2px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
 a:link,
 a:visited {
   text-decoration: none !important;

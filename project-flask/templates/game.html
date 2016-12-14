@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block heading %}Game Information: {{player.first_last}}, {{game.game_date}}{% endblock %}
+{% block content %}
+<table style="width:100%">
+  <tr>
+    <th>Points</th>
+    <th>Assists</th>
+    <th>Blocks</th>
+    <th>Steals</th>
+    <th>Rebounds</th>
+  </tr>
+  <tr>
+    <td>{{game.pts}}</td>
+    <td>{{game.ast}}</td>
+    <td>{{game.blk}}</td>
+    <td>{{game.stl}}</td>
+    <td>{{game.reb}}</td>
+  </tr>
+  <tr>
+    <th>Offensive Rebounds</th>
+    <th>Defensive Rebounds</th>
+    <th>Turnovers</th>
+  </tr>
+  <tr>
+    <td>{{game.oreb}}</td>
+    <td>{{game.dreb}}</td>
+    <td>{{game.tov}}</td>
+  </tr>
+  <tr>
+    <th>3-Point Field Goals Attempted</th>
+    <th>3-Point Field Goals Made</th>
+    <th>3-Point Field Goal %</th>
+  </tr>
+  <tr>
+    <td>{{game.fg3a}}</td>
+    <td>{{game.fg3m}}</td>
+    <td>{{game.fg3_pct}}</td>
+  </tr>  
+  <tr>
+    <th>Field Goals Attempted</th>
+    <th>Field Goals Made</th>
+    <th>Field Goal %</th>
+  </tr>
+  <tr>
+    <td>{{game.fga}}</td>
+    <td>{{game.fgm}}</td>
+    <td>{{game.fg_pct}}</td>
+  </tr>
+  <tr>
+    <th>Free Throws Attempted</th>
+    <th>Free Throws Made</th>
+    <th>Free Throw %</th>
+  </tr>
+  <tr>
+    <td>{{game.fta}}</td>
+    <td>{{game.ftm}}</td>
+    <td>{{game.ft_pct}}</td>
+  </tr>
+  <tr>
+    <th>Minutes</th>
+    <th>Personal Fouls</th>
+    <th>Plus/Minus</th>
+    <th>W/L</th>
+  </tr>
+  <tr>
+    <td>{{game.min}}</td>
+    <td>{{game.pf}}</td>
+    <td>{{game.plus_minus}}</td>
+    <td>{{game.wl}}</td>
+  </tr>
+{% endblock %}

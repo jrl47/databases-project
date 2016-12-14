@@ -2,5 +2,6 @@
 {% block heading %}Player Information: {{player.player_id}}{% endblock %}
 {% block content %}
 <p>Name: {{player.first_last}}</p>
-<p>Team: {{team.team_name}}</p>
+<p>Active From: {{player.from_year}} - {{player.to_year}}</p>
+<p>Current Team: {{player.team_city}} {{player.team_name}}</p>
 {% endblock %}

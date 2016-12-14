@@ -32,7 +32,7 @@ def home():
                     player = player.filter(attribute == value)
 
             total = player.count()
-            player = player.all()
+            player = player.order_by(getattr(models.Game, form.orderby.data).desc()).limit(100).all()
             return render_template('result-list.html', results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
@@ -55,6 +55,15 @@ def team(team_id):
         .filter(models.Team.team_id == team_id).one()
     return render_template('team.html',team=team)
 
+@app.route('/game/<game_id>/<player_id>/<matchup>')
+def game(game_id,player_id,matchup):
+    game = db.session.query(models.Game)\
+        .filter(models.Game.game_id == game_id)\
+        .filter(models.Game.player_id == player_id)\
+        .filter(models.Game.matchup == matchup).one()
+    player = db.session.query(models.Player)\
+        .filter(models.Player.player_id == player_id).one()
+    return render_template('game.html',game=game,player=player)
 
 @app.route('/query', methods=['GET', 'POST'])
 def query():

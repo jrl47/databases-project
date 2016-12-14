@@ -7,7 +7,6 @@ class PlayerSearchFormFactory:
     def form():
         class F(FlaskForm):
             first_last = StringField(default="")
-            query_type = SelectField('Type', choices=[('players', 'Players'), ('teams', 'Teams')])
             attribute = SelectField('Attribute', choices=[('pts', 'Points'), ('ast', 'Assists'), ('reb', 'Rebounds'), ('blk', 'Blocks'), ('stl', 'Steals')])
             predicate = SelectField('Predicate', choices=[('greater', '>='), ('less', '<='), ('equal', '=')])
             value = IntegerField(default=0)
@@ -23,6 +22,7 @@ class PlayerSearchFormFactory:
             attribute5 = SelectField('Attribute', choices=[('pts', 'Points'), ('ast', 'Assists'), ('reb', 'Rebounds'), ('blk', 'Blocks'), ('stl', 'Steals')])
             predicate5 = SelectField('Predicate', choices=[('greater', '>='), ('less', '<='), ('equal', '=')])
             value5 = IntegerField(default=0)
+            orderby = SelectField('Attribute', choices=[('pts', 'Points'), ('ast', 'Assists'), ('reb', 'Rebounds'), ('blk', 'Blocks'), ('stl', 'Steals')])
         return F()
 
 class StatSearchFormFactory:
