@@ -2,43 +2,67 @@
 {% block heading %}Search for a player!{% endblock %}
 {% block content %}
 
-
-<form action="{{url_for('home')}}" method="POST">
-  {{form.csrf_token}}
-  <p>
-    Find {{form.query_type}}
-    with {{form.attribute}} {{form.predicate}} {{form.value}}
-    {% if form.first_last.errors %}
-    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
-    {% endif %}
+<form id="form" action="{{url_for('home')}}" method="POST">
+  Find {{form.query_type}}
+  <p id="row-1">
+    with
+    <select id="attribute-1" name="attribute-1">
+      <option value="pts">Points</option>
+      <option value="ast">Assists</option>
+      <option value="reb">Rebounds</option>
+      <option value="blk">Blocks</option>
+      <option value="stl">Steals</option>
+    </select>
+    <select id="predicate-1" name="predicate-1">
+      <option value="greater">&gt;=</option>
+      <option value="less">&lt;=</option>
+      <option value="equal">=</option>
+    </select>
+    <input id="value-1" name="value-1" type="text" value="0">
   </p>
-  <p>
-    And {{form.attribute2}} {{form.predicate2}} {{form.value2}}
-    {% if form.first_last.errors %}
-    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
-    {% endif %}
-  </p>
-  <p>
-    And {{form.attribute3}} {{form.predicate3}} {{form.value3}}
-    {% if form.first_last.errors %}
-    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
-    {% endif %}
-  </p>
-  <p>
-    And {{form.attribute4}} {{form.predicate4}} {{form.value4}}
-    {% if form.first_last.errors %}
-    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
-    {% endif %}
-  </p>
-  <p>
-    And {{form.attribute5}} {{form.predicate5}} {{form.value5}}
-    {% if form.first_last.errors %}
-    <ul>{% for error in form.first_last.errors %}<li>{{error}}</li>{% endfor %}</ul>
-    {% endif %}
-  </p>
-  <hr/>
-  <input type="reset" value="Reset"/>
+  <button type="button" id="addNewInput">+ Add condition</button>
+  <hr id="sep"/>
+  <input type="reset" value="Reset" id="reset"/>
   <input type="submit" value="Submit"/>
   {% if 'database' in form.errors %}<p>{{form.errors['database']}}</p>{% endif %}
 </form>
+
+<script>
+var numRows = 1
+
+$("#addNewInput").click(function() {
+  numRows++;
+  var newInput = $("#row-1").clone();
+  childRecursive(newInput, function(e) {
+    if (e.attr('id') !== undefined) {
+      e.attr('id', e.attr('id').split('-')[0] + '-' + numRows)
+    }
+    if (e.attr('name') !== undefined) {
+      e.attr('name', e.attr('name').split('-')[0] + '-' + numRows)
+    }
+  })
+  newInput.insertBefore(this);
+});
+
+$("#reset").click(function() {
+  for (i = numRows; i > 1; i--) {
+    $("#row-" + i).remove();
+  }
+  numRows = 1;
+});
+
+// Accepts an element and a function
+function childRecursive(element, func) {
+  // Applies that function to the given element.
+  func(element);
+  var children = element.children();
+  if (children.length > 0) {
+    children.each(function() {
+      // Applies that function to all children recursively
+      childRecursive($(this), func);
+    });
+  }
+}
+
+</script>
 {% endblock %}

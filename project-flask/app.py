@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = 's3cr3t'
@@ -10,47 +10,30 @@ import forms
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = forms.PlayerSearchFormFactory.form()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         try:
             form.errors.pop('database', None)
-            if form.predicate.data=='greater':
-                player = db.session.query(models.Game,models.Player)\
-                    .join(models.Player)\
-                    .filter(getattr(models.Game, form.attribute.data) >= form.value.data).filter(models.Game.player_id == models.Player.player_id)
-            elif form.predicate.data=='less':
-                player = db.session.query(models.Game,models.Player)\
-                    .join(models.Player)\
-                    .filter(getattr(models.Game, form.attribute.data) <= form.value.data).filter(models.Game.player_id == models.Player.player_id)
-            elif form.predicate.data=='equal':
-                player = db.session.query(models.Game,models.Player)\
-                    .join(models.Player)\
-                    .filter(getattr(models.Game, form.attribute.data) == form.value.data).filter(models.Game.player_id == models.Player.player_id)
-            if form.predicate2.data=='greater':
-                player = player.filter(getattr(models.Game, form.attribute2.data) >= form.value2.data)
-            elif form.predicate2.data=='less':
-                player = player.filter(getattr(models.Game, form.attribute2.data) <= form.value2.data)
-            elif form.predicate2.data=='equal':
-                player = player.filter(getattr(models.Game, form.attribute2.data) == form.value2.data)
-            if form.predicate3.data=='greater':
-                player = player.filter(getattr(models.Game, form.attribute3.data) >= form.value3.data)
-            elif form.predicate3.data=='less':
-                player = player.filter(getattr(models.Game, form.attribute3.data) <= form.value3.data)
-            elif form.predicate3.data=='equal':
-                player = player.filter(getattr(models.Game, form.attribute3.data) == form.value3.data)
-            if form.predicate4.data=='greater':
-                player = player.filter(getattr(models.Game, form.attribute4.data) >= form.value4.data)
-            elif form.predicate4.data=='less':
-                player = player.filter(getattr(models.Game, form.attribute4.data) <= form.value4.data)
-            elif form.predicate4.data=='equal':
-                player = player.filter(getattr(models.Game, form.attribute4.data) == form.value4.data)
-            if form.predicate5.data=='greater':
-                player = player.filter(getattr(models.Game, form.attribute5.data) >= form.value5.data)
-            elif form.predicate5.data=='less':
-                player = player.filter(getattr(models.Game, form.attribute5.data) <= form.value5.data)
-            elif form.predicate5.data=='equal':
-                player = player.filter(getattr(models.Game, form.attribute5.data) == form.value5.data)
+            player = db.session.query(models.Game,models.Player)\
+                .join(models.Player)\
+                .filter(models.Game.player_id == models.Player.player_id)
+
+            f = request.form
+            rows = (len(f) - 1) / 3
+            for i in range(0, rows):
+                index = str(i + 1)
+                predicate = f['predicate-' + index]
+                attribute = getattr(models.Game, f['attribute-' + index])
+                value = f['value-' + index]
+                if predicate=='greater':
+                    player = player.filter(attribute >= value)
+                elif predicate=='less':
+                    player = player.filter(attribute <= value)
+                elif predicate=='equal':
+                    player = player.filter(attribute == value)
+
+            total = player.count()
             player = player.all()
-            return render_template('result-list.html',results=player)
+            return render_template('result-list.html', results=player)
         except BaseException as e:
             form.errors['database'] = str(e)
             return render_template('home.html', form=form)
