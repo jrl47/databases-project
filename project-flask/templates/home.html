@@ -2,6 +2,23 @@
 {% block heading %}Search for a player!{% endblock %}
 {% block content %}
 
+<p id="row-0">
+  with
+  <select id="attribute-0" name="attribute-0">
+    <option value="pts">Points</option>
+    <option value="ast">Assists</option>
+    <option value="reb">Rebounds</option>
+    <option value="blk">Blocks</option>
+    <option value="stl">Steals</option>
+  </select>
+  <select id="predicate-0" name="predicate-0">
+    <option value="greater">&gt;=</option>
+    <option value="less">&lt;=</option>
+    <option value="equal">=</option>
+  </select>
+  <input id="value-0" name="value-0" type="text" value="0">
+</p>
+
 <form id="form" action="{{url_for('home')}}" method="POST">
   Find {{form.query_type}}
   <p id="row-1">
@@ -28,12 +45,14 @@
 </form>
 
 <script>
+$("#row-0").hide();
 var numRows = 1
 
 $("#addNewInput").click(function() {
   numRows++;
-  var newInput = $("#row-1").clone();
+  var newInput = $("#row-0").clone().show();
   childRecursive(newInput, function(e) {
+    // increment id
     if (e.attr('id') !== undefined) {
       e.attr('id', e.attr('id').split('-')[0] + '-' + numRows)
     }
